@@ -16,20 +16,21 @@
 	<name>spring</name>
 	<description>Demo project for Spring Boot</description>
 
-	<url/>
 	<licenses>
-		<license/>
+		<license>
+			<name>MIT License</name>
+			<url>https://opensource.org/licenses/MIT</url>
+		</license>
 	</licenses>
-	<developers>
-		<developer/>
-	</developers>
 
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+	<developers>
+		<developer>
+			<name>Danil Dmitrievich</name>
+			<email>mr.naydyuk2@gmail.com</email>
+			<organization>com.github.fromsiberiaq</organization>
+			<organizationUrl>https://github.com/FromSiberiq</organizationUrl>
+		</developer>
+	</developers>
 
 	<properties>
 		<java.version>17</java.version>
