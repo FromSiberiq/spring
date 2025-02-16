@@ -3,10 +3,7 @@ package com.example.spring.book.service;
 import com.example.spring.book.entity.BookEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class BookService {
@@ -21,7 +18,7 @@ public class BookService {
         for (int i = 0; i < 100; i++) {
             BookEntity book = new BookEntity();
             book.setId(i);
-            book.setTitle("Book #" +  rand.nextInt(100, 999));
+            book.setTitle("Book #" + rand.nextInt(100, 999));
             book.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
                     "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
                     "ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
@@ -49,7 +46,8 @@ public class BookService {
     }
 
     public Optional<BookEntity> edit(BookEntity book) {
-        Optional <BookEntity> oldBookOptional = byId(book.getId());
+        Optional<BookEntity> oldBookOptional = byId(book.getId());
+
         if (oldBookOptional.isEmpty()) {
             return Optional.empty();
         }
@@ -57,15 +55,34 @@ public class BookService {
         BookEntity oldBookEntity = oldBookOptional.get();
         oldBookEntity.setTitle(book.getTitle());
         oldBookEntity.setDescription(book.getDescription());
+
         return Optional.of(oldBookEntity);
     }
 
     public Boolean delete(Integer id) {
         Optional<BookEntity> book = byId(id);
-        if(book.isEmpty()) {
+        if (book.isEmpty()) {
             return false;
         }
         bookStorage.remove(book.get());
         return true;
+    }
+
+    public Optional<BookEntity> editPart(Integer id, Map<String, String> fields) {
+        Optional<BookEntity> optionalBookEntity = byId(id);
+        if (optionalBookEntity.isEmpty()) {
+            return Optional.empty();
+        }
+
+        BookEntity book = optionalBookEntity.get();
+
+        for (String key : fields.keySet()) {
+            switch (key) {
+                case "title" -> book.setTitle(fields.get(key));
+                case "description" -> book.setDescription(fields.get(key));
+            }
+        }
+
+        return Optional.of(book);
     }
 }
